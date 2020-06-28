@@ -1,19 +1,17 @@
 # Imports
-from uuid import uuid4
-from flask import Flask, jsonify, request
+from argparse import ArgumentParser
+from flask import Flask, jsonify, request, abort
 import routes  # Register API routes
-app = Flask(__name__)  # Create a new Flask server!
+from blockchain import Blockchain  # Load our blockchain class
 
-# Save my address to identify myself as a node
-node_identifier = str(uuid4()).replace("-", "")
+app = Flask(__name__)  # Create a new Flask server!
 
 # Create a Blockchain Application
 blockchain = Blockchain()
 
-# Arguments for application running
-if __name__ == "__main__":
-    from argparse import ArgumentParser
 
+def startServer():  # Function to run server application
+    # Arguments for application running
     parser = ArgumentParser()
     # Usage: python main.py --port <any port number>
     parser.add_argument("-p", "--port", default=3000,
