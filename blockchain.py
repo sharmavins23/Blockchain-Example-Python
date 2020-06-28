@@ -1,7 +1,12 @@
 class Blockchain:
     # Constructor
     def __init__(self):
-        pass
+        self.chain = []  # Normally a linked list, but we're lazy. So.
+        self.nodes = set()  # Address book of neighbor nodes
+        self.current_transactions = []  # Transactions that haven't been posted onto a block
+
+        # Create the first (genesis) block of the chain
+        self.new_block(previous_hash='1', proof=100)
 
     # Function to register a neighboring node (other user) in personal address book
 
