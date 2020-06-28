@@ -20,8 +20,9 @@ representation.
 The original code for this project was adapted from Penn State's independent
 study program labelled Computer Science 297 - Blockchain Deep Dive. This course
 is offered at Penn State's University Park main campus by Penn State's own
-Distributed Ledger Society. The implementation of this code, however, and my
-changes/improvements on the initial versions are my own.
+[Distributed Ledger Society](https://www.blockchainpsu.com/). The implementation
+of this code, however, and my changes/improvements on the initial versions are
+my own.
 
 # Program Stack
 
