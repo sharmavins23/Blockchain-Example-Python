@@ -57,6 +57,26 @@ class Blockchain:
         # Return SHA256 hash in hex
         return hashlib.sha256(strBlock).hexdigest()
 
-    # Function to check the proof of work of a block
+    # Function to create the proof of work of a block
+    def proof_of_work(self, last_block):
+        last_proof = last_block["proof"]  # Last proof of work
+        last_hash = self.hash(last_block)  # Recalc last hash
+
+        proof = 0
+        # Don't actually do this... This is for simplification purposes.
+        while self.valid_proof(last_proof, proof, last_hash) is False:
+            proof += 1  # Iterates proof values instead of calculating
+            # Will keep iterating until a proof works and is valid
+            # Which means this could theoretically take infinite time
+
+        return proof
 
     # Function to check if a proof of work is valid
+    @staticmethod
+    def valid_proof(last_proof, proof, last_hash):
+        # Create a proof based on these encoded values
+        guess = f'{last_proof}{proof}{last_hash}'.encode()
+        guess_hash = hashlib.sha256(guess).hexdigest()
+
+        # A valid proof will have first four bits zeroes, and return True
+        return guess_hash[:4] == "0000"
