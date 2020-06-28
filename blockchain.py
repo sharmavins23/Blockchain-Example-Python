@@ -23,7 +23,24 @@ class Blockchain:
 
     # Function to resolve conflicts between neighbors' chains
 
-    # Function to create a new block
+    # Function to create a new block and add it to the chain
+    def new_block(self, proof, previous_hash):
+        block = {
+            "index": len(self.chain) - 1,  # Point in chain
+            "timestamp": time(),  # Uses date/time library
+            "transactions": self.current_transactions,
+            "proof": proof,
+            "previous_hash": previous_hash or self.hash(self.last_block)
+        }
+
+        # Reset the list of our un-tracked transactions
+        self.current_transactions = []
+
+        # Append the new block to our chain
+        self.chain.append(block)
+
+        # Return our block object (for other uses later)
+        return block
 
     # Function to create a new sale/transaction of money
 
