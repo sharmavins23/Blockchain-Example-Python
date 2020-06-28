@@ -1,3 +1,12 @@
+from time import time
+import hashlib
+import json
+
+from urllib.parse import urlparse
+
+import requests
+
+
 class Blockchain:
     # Constructor
     def __init__(self):
@@ -19,8 +28,17 @@ class Blockchain:
     # Function to create a new sale/transaction of money
 
     # Function to get the last block of a chain (think peek from linked list)
+    @property
+    def last_block(self):
+        return self.chain[-1]
 
     # Function to create a cryptographic hash
+    @staticmethod  # This function won't be re-made every time we make a new Blockchain
+    def hash(block):
+        # Put all JSON metadata into encoded string
+        strBlock = json.dumps(block, sort_keys=True).encode()
+        # Return SHA256 hash in hex
+        return hashlib.sha256(strBlock).hexdigest()
 
     # Function to check the proof of work of a block
 
