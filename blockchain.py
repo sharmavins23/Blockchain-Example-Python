@@ -18,6 +18,15 @@ class Blockchain:
         self.new_block(previous_hash='1', proof=100)
 
     # Function to register a neighboring node (other user) in personal address book
+    def register_node(self, address):
+        parsed_url = urlparse(address)  # Parse value into usable format
+
+        if parsed_url.netloc:  # If there is a specific net domain, e.g. "example.com"
+            self.nodes.add(parsed_url.netloc)  # Add the net location
+        elif parsed_url.path:  # If URL has 'IP address' schema, e.g. "192.168.1.1:3000"
+            self.nodes.add(parsed_url.path)  # Add the IP path
+        else:  # If no URL provided
+            raise ValueError("Invalid address")
 
     # Function to check if a chain is valid
 
@@ -35,10 +44,8 @@ class Blockchain:
 
         # Reset the list of our un-tracked transactions
         self.current_transactions = []
-
         # Append the new block to our chain
         self.chain.append(block)
-
         # Return our block object (for other uses later)
         return block
 
