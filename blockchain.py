@@ -27,10 +27,30 @@ class Blockchain:
             raise ValueError("Invalid address")
 
     # Function to check if a chain is valid
+    def valid_chain(self, chain):
+        last_block = chain[0]  # We'll iterate through all blocks
+        current_index = 1
+        # Normally, we should be checking all of the proofs of work.
+        # But instead we're going to check the hash values lining up
+
+        while current_index < len(chain):
+            block = chain[current_index]  # Temp. store current block
+            last_block_hash = self.hash(last_block)  # Store last hash
+
+            # If hash pointer is wrong, it's not a valid chain.
+            if block["previous_hash"] != last_block_hash:
+                return False
+
+            last_block = block  # Iterate to next block in chain
+            current_index += 1
+
+        # At this point, all of the blocks have been checked and are NOT INvalid
+        return True
 
     # Function to resolve conflicts between neighbors' chains
 
     # Function to create a new block and add it to the chain
+
     def new_block(self, proof, previous_hash):
         block = {
             "index": len(self.chain) - 1,  # Point in chain
