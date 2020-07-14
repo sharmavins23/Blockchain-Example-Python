@@ -9,6 +9,17 @@ from main import app, blockchain, startServer
 # Save my address to identify myself as a node
 node_identifier = str(uuid4()).replace("-", "")
 
+
+# Route to brew coffee.
+@app.route("/brew", methods=["GET"])
+def teapot():
+    response = {
+        'message': 'I cannot brew coffee for you.',
+        'why': 'Because I\'m a teapot.'
+    }
+
+    return jsonify(response), 418
+
 # Route to 'mine' (post) a new block
 
 # Route to post a new transaction
