@@ -22,7 +22,7 @@ def teapot():
 
 
 # Route to 'mine' (post) a new block
-@app.route('/mine', methods=['GET'])
+@app.route('/mine', methods=['POST'])
 def mine():
     last_block = blockchain.last_block
     proof = blockchain.proof_of_work(last_block)
@@ -44,12 +44,46 @@ def mine():
         'previous_hash': block['previous_hash']
     }
 
-    return jsonify(response), 200
+    return jsonify(response), 201
 
 
 # Route to post a new transaction
 
+
+# Route to create a new chain
+@app.route("/chain", methods=["GET"])
+def full_chain():
+    response = {
+        'chain': blockchain.chain,
+        'length': len(blockchain.chain)
+    }
+
+    return jsonify(response), 200
+
+
 # Route to register (post) a new neighbor
+@app.route("/nodes/register", methods=["POST"])
+def register_nodes():
+    values = request.get_json()
+
+    # Testing purposes
+    # print(values)
+
+    nodes = values.get("nodes")
+
+    if nodes is None:
+        return "Error: Please supply a valid list of nodes", 400
+
+    for node in nodes:
+        blockchain.register_node(node)
+
+    response = {
+        "message": "New nodes have been added",
+        "total_nodes": list(blockchain.nodes)
+    }
+
+    return jsonify(response), 201
+
 
 # Route to resolve neighboring chains (get the longest one from friends)
 
