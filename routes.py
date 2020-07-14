@@ -86,6 +86,23 @@ def register_nodes():
 
 
 # Route to resolve neighboring chains (get the longest one from friends)
+@app.route("/nodes/resolve", methods=["POST"])
+def consensus():
+    # Takes all nodes and resolves all conflicts
+    replaced = blockchain.resolve_conflicts()
+
+    if replaced:
+        response = {
+            "message": "Our chain was replaced",
+            "new_chain": blockchain.chain
+        }
+    else:
+        response = {
+            "message": "Our chain was not replaced",
+            "new_chain": blockchain.chain
+        }
+
+    return jsonify(response), 200
 
 
 # Route to shut down our server (don't put these on actual applications, please)
