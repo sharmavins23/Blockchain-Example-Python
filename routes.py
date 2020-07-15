@@ -48,6 +48,23 @@ def mine():
 
 
 # Route to post a new transaction
+@app.route('/transactions/new', methods=['POST'])
+def new_transaction():
+    values = request.get_json()
+
+    required = ['sender', 'recipient', 'amount']
+
+    if not all(k in values for k in required):
+        return 'Missing values', 400
+
+    index = blockchain.new_transaction(
+        values['sender'], values['recipient'], values['amount'])
+
+    response = {
+        'message': f'Transactions will be added to Block {index}'
+    }
+
+    return jsonify(response), 201
 
 
 # Route to create a new chain
