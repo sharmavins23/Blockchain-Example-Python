@@ -67,7 +67,7 @@ def new_transaction():
     return jsonify(response), 201
 
 
-# Route to create a new chain
+# Route to get the chain
 @app.route("/chain", methods=["GET"])
 def full_chain():
     response = {
